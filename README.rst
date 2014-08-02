@@ -285,6 +285,9 @@ The recipe supports the following options:
     Violations plugin). Note that this option does not have any effect on the
     other code analysis scripts. Default is ``False``.
 
+**rst-spelling**
+    If set tot True, all ``.rst`` files will be checked for spelling mistakes.
+
 i18ndude and zptlint support
 ----------------------------
 

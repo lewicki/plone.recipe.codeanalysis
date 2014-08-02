@@ -4,6 +4,9 @@ Change history
 1.0rc2 (unreleased)
 -------------------
 
+- Add rst spelling checker.
+  [gforcada]
+
 - Add option to store flake8 output if jenkins is False
   [Michael Davis]
 

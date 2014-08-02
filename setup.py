@@ -55,6 +55,8 @@ setup(name='plone.recipe.codeanalysis',
       install_requires=[
           'flake8',
           'setuptools',
+          'sphinxcontrib-spelling',
+          'pyenchant',
           'zc.buildout',
           'zc.recipe.egg',
       ],

@@ -16,6 +16,7 @@ from plone.recipe.codeanalysis.python_utf8_header import \
     code_analysis_utf8_header
 from plone.recipe.codeanalysis.quoting import \
     code_analysis_prefer_single_quotes
+from plone.recipe.codeanalysis.rst import code_analysis_rst_spelling
 from plone.recipe.codeanalysis.zptlint import code_analysis_zptlint
 import os
 import subprocess
@@ -96,6 +97,8 @@ class Recipe(object):
         self.options.setdefault('flake8-filesystem', 'False')
         # Error codes
         self.options.setdefault('return-status-codes', 'False')
+        # rst spelling
+        self.options.setdefault('rst-spelling', 'False')
         # Find untranslated strings
         self.options.setdefault('find-untranslated', 'False')
         self.options.setdefault('i18ndude-bin', '')
@@ -175,6 +178,8 @@ class Recipe(object):
             {'suffix': 'debug-statements', },
             # bin/code-analysis-find-untranslated
             {'suffix': 'find-untranslated', },
+            # bin/code-analysis-rst-spelling
+            {'suffix': 'rst-spelling', },
         ]
 
         eggs = self.egg.working_set()[1]
@@ -255,6 +260,7 @@ def code_analysis(options):
         ['imports', code_analysis_imports],
         ['debug-statements', code_analysis_debug_statements],
         ['find-untranslated', code_analysis_find_untranslated],
+        ['rst-spelling', code_analysis_rst_spelling],
     ]
     status_codes = []
     for option, check in checks:
