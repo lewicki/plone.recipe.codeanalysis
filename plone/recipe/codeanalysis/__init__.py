@@ -224,7 +224,7 @@ class Recipe(object):
                 )
 
     def install_pre_commit_hook(self):
-        for git_hooks_directory in self.pre-commit-hook-directories:
+        for git_hooks_directory in self.pre_git_hook_directories:
             git_hooks_directory = git_hooks_directory + \
                 '/.git/hooks'
             if not os.path.exists(git_hooks_directory):
@@ -241,12 +241,13 @@ class Recipe(object):
         print('Install Git pre-commit hook.')
 
     def uninstall_pre_commit_hook(self):
-        git_hooks_directory = self.buildout['buildout']['directory'] + \
-            '/.git/hooks'
-        try:
-            os.remove(git_hooks_directory + '/pre-commit')
-        except OSError:
-            pass
+        for git_hooks_directory in self.pre_git_hook_directories:
+            git_hooks_directory = git_hooks_directory + \
+                '/.git/hooks'
+            try:
+                os.remove(git_hooks_directory + '/pre-commit')
+            except OSError:
+                pass
         print('Uninstall Git pre-commit hook.')
 
 
