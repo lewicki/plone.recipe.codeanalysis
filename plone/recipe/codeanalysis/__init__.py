@@ -44,6 +44,7 @@ class Recipe(object):
         # Set required default options
         self.options.setdefault('directory', '.')
         self.options.setdefault('pre-commit-hook', 'True')
+        self.options.setdefault('pre-commit-hook-directories', self.buildout['buildout']['directory'])
         # Flake 8
         self.options.setdefault('flake8', 'True')
         self.options.setdefault('flake8-ignore', '')
@@ -119,6 +120,9 @@ class Recipe(object):
                 self.buildout['buildout']['bin-directory'], self.name
             )
         ]
+        self.pre_git_hook_directories = [hook_dir.strip() for hook_dir 
+                                        in self.options['pre-commit-hook-directories'].split('\n')
+                                        if hook_dir.strip() != '']
 
     def install(self):
         self.install_scripts()
@@ -220,19 +224,20 @@ class Recipe(object):
                 )
 
     def install_pre_commit_hook(self):
-        git_hooks_directory = self.buildout['buildout']['directory'] + \
-            '/.git/hooks'
-        if not os.path.exists(git_hooks_directory):
-            print('Unable to create git pre-commit hook, '
-                  'this does not seem to be a git repository.')
-            return
-        with open(git_hooks_directory + '/pre-commit', 'w') as output_file:
-            output_file.write('#!/bin/bash\nbin/code-analysis')
-        subprocess.call([
-            'chmod',
-            '775',
-            git_hooks_directory + '/pre-commit',
-        ])
+        for git_hooks_directory in self.pre-commit-hook-directories:
+            git_hooks_directory = git_hooks_directory + \
+                '/.git/hooks'
+            if not os.path.exists(git_hooks_directory):
+                print('Unable to create git pre-commit hook, '
+                      'this does not seem to be a git repository.')
+                return
+            with open(git_hooks_directory + '/pre-commit', 'w') as output_file:
+                output_file.write('#!/bin/bash\nbin/code-analysis')
+            subprocess.call([
+                'chmod',
+                '775',
+                git_hooks_directory + '/pre-commit',
+            ])
         print('Install Git pre-commit hook.')
 
     def uninstall_pre_commit_hook(self):
