@@ -120,7 +120,7 @@ class Recipe(object):
                 self.buildout['buildout']['bin-directory'], self.name
             )
         ]
-        self.pre_git_hook_directories = [hook_dir.strip() for hook_dir 
+        self.pre_git_hook_directories = [hook_dir.strip() for hook_dir
                                         in self.options['pre-commit-hook-directories'].split('\n')
                                         if hook_dir.strip() != '']
 
